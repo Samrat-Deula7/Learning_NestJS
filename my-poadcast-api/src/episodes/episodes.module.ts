@@ -7,5 +7,6 @@ import { ConfigModule } from 'src/config/config.module';
   imports: [ConfigModule],
   controllers: [EpisodesController],
   providers: [EpisodesService],
+  exports: [EpisodesService],
 })
 export class EpisodesModule {}
