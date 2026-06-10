@@ -1,0 +1,58 @@
+📝 Debugging Timeline
+1. TypeScript Version Change
+You upgraded to TypeScript 6.x, which introduced a deprecation warning for "baseUrl".
+
+Message:
+
+Code
+Option 'baseUrl' is deprecated and will stop functioning in TypeScript 7.0.
+Short‑term fix was to add "ignoreDeprecations": "6.0" in tsconfig.json.
+
+Long‑term fix is to migrate to "paths" instead of "baseUrl".
+
+Fix
+
+2. Switching to paths 
+You replaced baseUrl with path aliases like:
+
+json
+"paths": {
+  "@config/*": ["src/config/*"],
+  "@episodes/*": ["src/episodes/*"]
+}
+✅ This solved the deprecation issue and future‑proofed your project for TypeScript 7.
+
+3. New Problem: Jest Couldn’t Resolve Aliases
+TypeScript understood the aliases, but Jest doesn’t read tsconfig.json for path resolution.
+
+Tests failed with errors like:
+
+Code
+Cannot find module '@episodes/episodes.service'
+Cannot find module 'src/config/config.module'
+4. Fixing Jest Resolution
+Added moduleNameMapper to Jest config so it mirrors the aliases:
+
+json
+"moduleNameMapper": {
+  "^src/(.*)$": "<rootDir>/$1",
+  "^@config/(.*)$": "<rootDir>/config/$1",
+  "^@episodes/(.*)$": "<rootDir>/episodes/$1"
+}
+✅ This told Jest exactly where to look when encountering src/... or @episodes/....
+
+5. Final Result
+TypeScript compiles cleanly with paths (no deprecation warnings).
+
+Jest resolves aliases correctly with moduleNameMapper.
+
+Tests now run without Cannot find module errors.
+
+✅ Lessons Learned
+Version upgrades can deprecate options — baseUrl works today but will break in TS 7.
+
+TypeScript and Jest need separate configs — paths for TypeScript, moduleNameMapper for Jest.
+
+Keep them in sync — whenever you add/change an alias in tsconfig.json, update Jest config too.
+
+Best practice — use a dedicated jest.config.js and tsconfig.spec.json for test builds, instead of embedding everything in package.json.
