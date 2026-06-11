@@ -6,9 +6,9 @@ import { EpisodesService } from './episodes.service';
 describe('EpisodesController', () => {
   let controller: EpisodesController;
 
-  const mockFindOne = jest.fn();
+  const mockFindOne = jest.fn();   // Its creates an mock function
 
-  const mockEpisodesService = {
+  const mockEpisodesService = {    // This is the fake version of the real EpisodesService.
     findAll: async () => [{ ep_id: 'id' }],
     findFeaturedEpisodes: async () => [{ ep_id: 'id' }],
     findOne: mockFindOne,
@@ -17,7 +17,7 @@ describe('EpisodesController', () => {
 
   beforeEach(async () => {
     jest.resetAllMocks();
-    const module: TestingModule = await Test.createTestingModule({
+    const module: TestingModule = await Test.createTestingModule({  // This builds an mini application context that wires everything together for testing.
       imports: [ConfigModule],
       controllers: [EpisodesController],
       providers: [{ provide: EpisodesService, useValue: mockEpisodesService }],
