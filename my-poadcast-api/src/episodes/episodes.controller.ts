@@ -53,7 +53,7 @@ export class EpisodesController {
   }
 
   @Post()
-  create(@Body(ValidationPipe) input: CreateEpisodeDto) {
+  create(@Body() input: CreateEpisodeDto) {
     console.log(input);
     return this.episodesService.create(input);
   }

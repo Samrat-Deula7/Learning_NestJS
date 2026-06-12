@@ -1,9 +1,9 @@
-import { IsBoolean, IsOptional, IsString } from "class-validator";
+import { IsBoolean, IsOptional, IsString } from 'class-validator';
 
-export class CreateEpisodeDto {
+export class CreateEpisodeDtoChecker {
   // This is an class-validator
   @IsString()
-  ep_title!: string;
+  ep_title?: string;
 
   // This is an class-validator
   @IsBoolean()
