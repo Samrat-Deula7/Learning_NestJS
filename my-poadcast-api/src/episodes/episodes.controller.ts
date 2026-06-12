@@ -7,9 +7,10 @@ import {
   ParseIntPipe,
   Post,
   Query,
+  ValidationPipe,
 } from '@nestjs/common';
 import { EpisodesService } from '@episodes/episodes.service';
-import { type CreateEpisodeDto } from '../../entity/episode.entity';
+import { type CreateEpisodeDto } from '../entity/episode.entity';
 import { ConfigService } from '@config/config.service';
 import { IsPositivePipe } from 'src/pipes/is-positive-pipe';
 
@@ -52,7 +53,7 @@ export class EpisodesController {
   }
 
   @Post()
-  create(@Body() input: CreateEpisodeDto) {
+  create(@Body(ValidationPipe) input: CreateEpisodeDto) {
     console.log(input);
     return this.episodesService.create(input);
   }
