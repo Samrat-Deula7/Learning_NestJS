@@ -16,7 +16,6 @@ import { ConfigService } from '@config/config.service';
 import { IsPositivePipe } from 'src/pipes/is-positive-pipe';
 import { ApiCheckGuard } from '../guards/api-check/api-check.guard';
 
-@UseGuards(ApiCheckGuard)
 @Controller('episodes')
 export class EpisodesController {
   constructor(
@@ -55,6 +54,7 @@ export class EpisodesController {
     return episode;
   }
 
+  @UseGuards(ApiCheckGuard)
   @Post()
   create(@Body() input: CreateEpisodeDto) {
     console.log(input);
